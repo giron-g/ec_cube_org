@@ -1,1 +1,9 @@
-/* カスタマイズ用CSS */
+@charset "UTF-8";
+
+.ec-footerRole{
+    background: #9f9f9f;
+}
+
+.ec-footerTitle{
+    font-family: 'Philosopher',sans-serif;
+}

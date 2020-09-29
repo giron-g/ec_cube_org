@@ -5,8 +5,6 @@ networks:
     driver: bridge
 
 volumes:
-  pg-database:
-    driver: local
   mysql-database:
     driver: local
   mailcatcher-data:
@@ -30,28 +28,14 @@ services:
         # ビルド時点でDBサーバの起動や接続が出来ない、という場合等にエラーとなるため。
         SKIP_INSTALL_SCRIPT_ON_DOCKER_BUILD: "true"
     ports:
-      - 8080:80
-      - 4430:443
+      - 80:80
+      - 443:443
     volumes:
       - ".:/var/www/html:cached"
       ### 同期対象からコストの重いフォルダを除外 #####################
       - "var:/var/www/html/var"
       - "vendor:/var/www/html/vendor"
       - "node_modules:/var/www/html/node_modules"
-    networks:
-      - backend
-
-  ### Postgres ################################
-  postgres:
-    image: postgres:10
-    environment:
-      - POSTGRES_DB=eccubedb
-      - POSTGRES_USER=dbuser
-      - POSTGRES_PASSWORD=secret
-    ports:
-      - 15432:5432
-    volumes:
-      - pg-database:/var/lib/postgresql/data
     networks:
       - backend
 
@@ -66,7 +50,7 @@ services:
     volumes:
       - mysql-database:/var/lib/mysql
     ports:
-      - 13306:3306
+      - 3306:3306
     networks:
       - backend
 
